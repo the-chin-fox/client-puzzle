@@ -64,20 +64,20 @@ var abc = new Vue({
         return e == ""
       })
 
-      // if (zero == 0 || zero == 2 || zero == 6 || zero == 8) {
-      //   var helper = this.games.splice(1,1,'')
-      //   this.moveImage(4)
-      //   this.games.splice(4,1,helper)
-      // } else {
-      //   this.moveImage(4)
-      // }
-
+      if (zero == 0 || zero == 2 || zero == 6 || zero == 8) {
+        if (zero < 3) {
+          let helperTop = this.games.splice(7,1,'')
+          this.moveImage(4)
+          this.games.splice(7,1,helperTop)
+        } else {
+          var helperBot = this.games.splice(1,1,'')
+          this.moveImage(4)
+          this.games.splice(4,1,helperBot)
+        }
+      } else {
         this.moveImage(4)
-      // if (this.couter()) {
-      //
-      // }
-
-
+      }
+      this.counter = 0
       return this.games;
     },
     compare(){
