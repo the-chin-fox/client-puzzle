@@ -5,6 +5,7 @@ var abc = new Vue({
     game_1 : false,
     message: 'Hello Vue!',
     counter : 0,
+    isStart : false,
     images : [
       '/images/1.png',
       '/images/2.png',
@@ -41,6 +42,8 @@ var abc = new Vue({
         var a = this.games.splice(i,1,'')
         this.games.splice(zeroIndex,1,a)
       }
+
+      this.compare()
     },
     canMove(emptyPosition, clickedPosition) {
         switch (emptyPosition) {
@@ -65,6 +68,7 @@ var abc = new Vue({
         }
     },
     random(){
+      this.isStart = true
       this.counter = 0
       for (var i = this.games.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -91,15 +95,16 @@ var abc = new Vue({
         this.moveImage(4)
       }
       this.counter = 0
+
       return this.games;
     },
     compare(){
       var result = this.images.slice(0,8)
       result.push('')
-      if (String(this.games) == String(result)) {
+      if (String(this.games) == String(result) && this.isStart) {
         return 'MENANG'
       } else {
-        return 'BELUM'
+        return 'LETS DO THIS'
       }
     }
   },
