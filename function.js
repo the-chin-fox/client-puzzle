@@ -102,7 +102,7 @@ var abc = new Vue({
       var result = this.images.slice(0,8)
       result.push('')
       if (String(this.games) == String(result) && this.isStart) {
-        return 'MENANG'
+        return 'CONGRATULATION YOU BEAT YOUR MIND !'
       } else {
         return 'LETS DO THIS'
       }
