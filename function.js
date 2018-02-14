@@ -1,6 +1,8 @@
 var abc = new Vue({
   el: '#app',
   data: {
+    home : true,
+    game_1 : false,
     message: 'Hello Vue!',
     counter : 0,
     images : [
@@ -15,19 +17,30 @@ var abc = new Vue({
       '/images/9.png']
   },
   methods : {
+    navigationGame_1(id){
+      this.home = false
+      this.game_1 = true
+      this.navigationClose('homeNav')
+      document.getElementById(id).classList.add('is-active')
+    },
+    navigationHome(id){
+      this.home = true
+      this.game_1 = false
+      this.navigationClose('game_1Nav')
+      document.getElementById(id).classList.add('is-active')
+    },
+    navigationClose(id){
+      document.getElementById(id).classList.remove('is-active')
+    },
     moveImage(i) {
-
-      //push ke yang kosong
       let zeroIndex = this.games.findIndex(function(e){
         return e == ""
       })
-
       if (this.canMove(zeroIndex, i)) {
         this.counter += 1
         var a = this.games.splice(i,1,'')
         this.games.splice(zeroIndex,1,a)
       }
-
     },
     canMove(emptyPosition, clickedPosition) {
         switch (emptyPosition) {

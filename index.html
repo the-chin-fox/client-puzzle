@@ -14,34 +14,81 @@
   </head>
   <body>
     <div id="app">
-      <div class="container">
-        <div class="resize">
-          <div class="columns is-multiline">
-            <div class="column is-one-third" v-for="(game,i) in games">
-              <figure class="image">
-                <img :src='game' alt="" @click="moveImage(i)">
+      <section  class="hero is-info is-fullheight">
+          <div class="hero-body" v-if="home">
+            <div class="container has-text-centered">
+              <figure class="image-centered is-128x128">
+                <img src="logo.png" style="width=300px">
               </figure>
+              <br>
             </div>
           </div>
-        </div>
-        <a class="button" @click="random">RANDOM</a>
 
-        <h1>MOVES : {{counter}}</h1>
+<!-- GAME 1 -->
+          <div class="hero-body" v-if="game_1">
+            <div class="container">
+              <div id="left-page">
+                <h1 class="title"> SLIDE PUZZLE </h1>
+                <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
+                <h1>MOVES : {{counter}}</h1>
 
-      </div>
-        <br>
-        <h1>ORIGINAL IMAGE</h1>
-        <div class="result-image">
-          <div class="columns is-multiline">
-            <div class="column is-one-third" v-for="image in images">
-              <figure class="image">
-                <img :src='image' alt="">
-              </figure>
+                    <div class="columns is-multiline">
+                      <div class="column is-one-third" v-for="(game,i) in games">
+                        <figure class="image">
+                          <img :src='game' alt="" @click="moveImage(i)">
+                        </figure>
+                      </div>
+                  </div>
+                  <a class="button" @click="random">Reshuffle</a>
+              </div>
+              <div id="right-page">
+                <div class="container  resize">
+                  <h1 class="subtitle">ORIGINAL IMAGE</h1>
+                    <div class="columns is-multiline is-gapless">
+                      <div class="column is-one-third" v-for="image in images">
+                        <figure class="image">
+                          <img :src='image' alt="">
+                        </figure>
+                      </div>
+                    </div>
+                  <p>STATUS : {{compare()}}</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <p>STATUS : {{compare()}}</p>
+
+<!-- FOOTER -->
+          <div class="hero-foot">
+            <nav class="tabs is-boxed is-fullwidth">
+              <div class="container">
+                <ul>
+                  <li class="navbottom is-active" id="homeNav" @click=(navigationHome('homeNav'))>
+                    <a>Home</a>
+                  </li>
+                  <li class="navbottom" id="customeNav">
+                    <a>CUSTOM PUZZLE</a>
+                  </li>
+                  <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('game_1Nav'))>
+                    <a>GAME 1</a>
+                  </li>
+                  <li>
+                    <a>GAME 2</a>
+                  </li>
+                  <li>
+                    <a>LEADERBOARD</a>
+                  </li>
+                  <li>
+                    <a>LOGIN</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+      </section>
+
+
+
     </div>
 
 
