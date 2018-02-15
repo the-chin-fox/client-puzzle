@@ -25,6 +25,7 @@ Vue.component('firstgame-component', {
     }
   },
   methods : {
+
     moveImage(i) {
       let zeroIndex = this.games.findIndex(function(e){
         return e == ""
