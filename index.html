@@ -9,6 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.js"></script>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
   </head>
@@ -73,7 +74,7 @@
             <p>Input your username to save your score</p>
             <div class="field">
               <div class="control">
-                <input class="input" type="text" placeholder="e.g theChinFox">
+                <input class="input" type="text" placeholder="e.g theChinFox"  v-model="username">
               </div>
             </div>
 
@@ -100,7 +101,7 @@
 
           </section>
           <footer class="modal-card-foot">
-            <button class="button is-success">Save changes</button>
+            <button class="button is-success"  v-on:click="saveScore()">Save changes</button>
             <button class="button" onclick="closeModal('#submitScore')">Cancel</button>
           </footer>
         </div>
@@ -162,7 +163,7 @@
           <div id="right-page">
             <div class="column is-one-third">
                 Result Image
-                <div class="columns is-multiline">
+                <div class="columns is-multiline" style="background-color:red">
                     <div class="column is-one-third" v-for="(item, idx) in result">
                         <figure class="image">
                             <img v-bind:src='item' alt="" v-on:click="moveToPick(item, idx)">
@@ -195,11 +196,25 @@
       <div class="hero-body">
         <div class="container">
           <div id="left-page">
-            <input id="imageId" type="file" name="" value="">
-            <button type="button" name="button" class="btn btn-primary" @click="uploadImage">Okay</button>
-          </div>
+            <div style="border:3px outset black;padding:0;margin:0" class="column is-one-quarter">
+              <div class="file is-boxed is-dark">
+                <label class="file-label">
+                  <input id="imageId" class="file-input" type="file" name="resume">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                </label>
+              </div>
+            <button type="button" name="button" class="button is-primary" style="width:100%;" @click="uploadImage">Okay</button>
+              </div>
+            </div>
           <div id="right-page">
-            <h1 class="title"> LEADER BOARD MOVE PUZZLE</h1>
+            <h1 class="title"> INSERT PHOTO TO PLAY </h1>
           </div>
         </div>
       </div>

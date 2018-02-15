@@ -33,6 +33,7 @@ Vue.component('custom-component', {
   },
   methods: {
     uploadImage () {
+      images = []
       let imageId = document.querySelector('#imageId')
       const formData = new FormData()
 
@@ -51,6 +52,12 @@ Vue.component('custom-component', {
         images.push(result.data.imageSlice3)
         images.push(result.data.imageSlice6)
         images.push(result.data.imageSlice9)
+        swal({
+          title: "Good job!",
+          text: "Your photo's has been uploaded !",
+          icon: "success",
+          button: "Let's play!",
+        });
         console.log(images);
       }).catch((err) => {
         console.log(err);
@@ -301,7 +308,7 @@ Vue.component('secondgame-component', {
         stopTimer: function () {
             this.disableButton = true;
             clearInterval(this.timer);
-            
+
             finalMove = this.totalMoves;
             finalTime = this.date;
         }
@@ -317,11 +324,11 @@ new Vue({
       game_1 : false,
       game_2 : false,
       leaderboard : false,
-      custom : false
+      custom : false,
+      username : ''
     }
   },
   methods : {
-
     navigationGame_1(id){
       $('.navbottom').removeClass('is-active')
       this.game_1 = true
@@ -370,6 +377,23 @@ new Vue({
       this.custom = true
       navigationCloseBiasa()
       navigationOpenBiasa(id)
-    }
+    },
+    saveScore(){
+      axios.post('http://localhost:3000/api/leaderboard/', {
+        name: this.username,
+        move: document.getElementById("#finalMove").value,
+        time: document.getElementById("#finalTime").value,
+        game: document.getElementById("#finalGame").value
+      })
+      .then(function (response) {
+        closeModal('#submitScore')
+        console.log('response');
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log('error');
+        console.log(error);
+      });
+    },
   }
 })
