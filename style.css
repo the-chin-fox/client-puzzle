@@ -1,0 +1,26 @@
+.resize {
+  width: 50%
+}
+
+.result-image{
+  width: 10%;
+}
+
+#left-page{
+  margin-right: 50px;
+  float: left;
+  width: 50%
+}
+
+#right-page{
+  float: left;
+  width: 40%
+}
+
+#transition {
+  transition: 1s
+}
+
+.resizeSecondGame{
+  width: 700%
+}

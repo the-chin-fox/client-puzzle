@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Puzzle Master!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+<div id="app">
+      <section  class="hero is-info is-fullheight">
+          <div class="hero-body" v-if="home">
+            <div class="container has-text-centered">
+              <figure class="image-centered is-128x128">
+                <img src="logo.png" style="width=300px">
+              </figure>
+              <br>
+            </div>
+          </div>
+
+<!-- GAME 1 -->
+          <firstgame-component v-if="game_1"></firstgame-component>
+
+<!-- GAME 2 -->
+          <secondgame-component v-if="game_2"></secondgame-component>
+
+<!-- GAME 2 -->
+          <custom-component v-if="custom"></custom-component>
+
+<!-- FOOTER -->
+          <div class="hero-foot">
+            <nav class="tabs is-boxed is-fullwidth">
+              <div class="container">
+                <ul>
+                  <li class="navbottom is-active" id="homeNav" @click=(navigationHome('#homeNav'))>
+                    <a>Home</a>
+                  </li>
+                  <li class="navbottom" id="customeNav" @click=navigationCustom('customeNav')>
+                    <a>CUSTOM PUZZLE</a>
+                  </li>
+                  <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('#game_1Nav'))>
+                    <a>GAME 1</a>
+                  </li>
+                  <li class="navbottom"id="game_2Nav" @click=(navigationGame_2('#game_2Nav'))>
+                    <a>GAME 2</a>
+                  </li>
+                  <li>
+                    <a>LEADERBOARD</a>
+                  </li>
+                  <li>
+                    <a>LOGIN</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+      </section>
+      <div class="modal" id='submitScore'>
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Congratulation you won this game</p>
+            <button class="delete" onclick="closeModal('#submitScore')" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <p>Input your username to save your score</p>
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="e.g theChinFox">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Total Moves</label>
+              <div class="control">
+                <input class="input" id='#finalMove' disabled>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Times</label>
+              <div class="control">
+                <input class="input" id='#finalTime' disabled>
+              </div>
+            </div>
+
+            <div class="field" hidden>
+              <label class="label">Game ID</label>
+              <div class="control">
+                <input class="input" id='#finalGame' disabled>
+              </div>
+            </div>
+
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button" onclick="closeModal('#submitScore')">Cancel</button>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+<!-- FIRST GAME TEMPLATE -->
+    <template id="firstgame-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> SLIDE PUZZLE </h1>
+            <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
+            <h1>MOVES : {{totalMoves}} |  Time : {{date}} s</h1>
+                <div class="columns is-multiline">
+                  <div class="column is-one-third" v-for="(game,i) in games">
+                    <figure class="image">
+                      <img :src='game' alt="" @click="moveImage(i)">
+                    </figure>
+                  </div>
+              </div>
+              <a class="button" @click="random">Reshuffle</a>
+          </div>
+          <div id="right-page">
+            <div class="container  resize">
+              <h1 class="subtitle">ORIGINAL IMAGE</h1>
+                <div class="columns is-multiline is-gapless">
+                  <div class="column is-one-third" v-for="image in images">
+                    <figure class="image">
+                      <img :src='image' alt="">
+                    </figure>
+                  </div>
+                </div>
+              <p>{{compare()}}</p>
+            </div>
+          </div>
+        </div>
+    </template>
+
+    <!-- GAME 2 -->
+    <template id="secondGame-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> MOVE PUZZLE </h1>
+            <h2 class="subtitle"> Stay relax, pick image to play!  </h2>
+            <h1> Moves : {{totalMoves}}  |  Time : {{date}} s</h1>
+            <div class="columns is-multiline">
+                <div class="column is-one-third" v-for="(item, idx) in pickImage">
+                    <figure class="image">
+                        <img v-bind:src='item' alt="" v-on:click="moveToResult(item, idx)">
+                    </figure>
+                </div>
+            </div>
+            <a class="button" @click="reset">Reshuffle</a>
+            <a class="button" @click="start">Start Game</a>
+
+          </div>
+          <div id="right-page">
+            <div class="column is-one-third">
+                Result Image
+                <div class="columns is-multiline">
+                    <div class="column is-one-third" v-for="(item, idx) in result">
+                        <figure class="image">
+                            <img v-bind:src='item' alt="" v-on:click="moveToPick(item, idx)">
+                        </figure>
+                    </div>
+                </div>
+                <p>Status : {{statusWin}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+<!-- TEMPLATE LEADERBOARD -->
+    <template id="leaderboard-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> LEADER BOARD SLIDE PUZZLE</h1>
+          </div>
+          <div id="right-page">
+            <h1 class="title"> LEADER BOARD MOVE PUZZLE</h1>
+          </div>
+        </div>
+      </div>
+    </template>
+
+<!-- TEMPLATE CUSTOM PUZZLE -->
+    <template id="custom-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <input id="imageId" type="file" name="" value="">
+            <button type="button" name="button" class="btn btn-primary" @click="uploadImage">Okay</button>
+          </div>
+          <div id="right-page">
+            <h1 class="title"> LEADER BOARD MOVE PUZZLE</h1>
+          </div>
+        </div>
+      </div>
+    </template>
+
+  <script type="text/javascript" src="function.js">
+
+  </script>
+  </body>
+</html>
