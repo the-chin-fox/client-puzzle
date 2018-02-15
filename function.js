@@ -6,26 +6,34 @@ function navigationCloseBiasa(){
   $('.navbottom').removeClass('is-active')
 }
 
+var images = [
+  '/images/1.png',
+  '/images/2.png',
+  '/images/3.png',
+  '/images/4.png',
+  '/images/5.png',
+  '/images/6.png',
+  '/images/7.png',
+  '/images/8.png',
+  '/images/9.png'
+]
+
 Vue.component('firstgame-component', {
+  // props: ['images'],
   template: "#firstgame-template",
   data : function () {
     return {
       counter : 0,
       statusWin : false,
-      images : [
-        '/images/1.png',
-        '/images/2.png',
-        '/images/3.png',
-        '/images/4.png',
-        '/images/5.png',
-        '/images/6.png',
-        '/images/7.png',
-        '/images/8.png',
-        '/images/9.png']
+      images : images,
+      dissableButton : true,
+      dissableStart : false,
+      timer : 0,
+      startDate : 0,
+      date: 0,
     }
   },
   methods : {
-
     moveImage(i) {
       let zeroIndex = this.games.findIndex(function(e){
         return e == ""
@@ -88,17 +96,35 @@ Vue.component('firstgame-component', {
         this.moveImage(4)
       }
       this.counter = 0
-
+      this.start()
       return this.games;
     },
     compare(){
       var result = this.images.slice(0,8)
       result.push('')
       if (String(this.games) == String(result) && this.statusWin) {
+        this.stopTimer()
         return 'CONGRATULATION YOU BEAT YOUR MIND !'
       } else {
         return 'LETS DO THIS'
       }
+    },
+    runDate: function () {
+        this.date = Math.abs(Math.round((this.startDate - new Date()) / 1000));
+    },
+    start: function () {
+        if (!this.dissableStart) {
+            this.startTimer();
+        }
+    },
+    startTimer: function () {
+        this.disableButton = false;
+        this.startDate = new Date();
+        this.timer = setInterval(this.runDate, 1000);
+    },
+    stopTimer: function () {
+        this.disableButton = true;
+        clearInterval(this.timer);
     }
   },
   computed : {
@@ -112,16 +138,11 @@ Vue.component('firstgame-component', {
 })
 
 //second game
-
 Vue.component('secondgame-component', {
     template: `#secondGame-template`,
     data: function () {
         return {
-            inputs: [
-                './images/1.png', './images/2.png', './images/3.png',
-                './images/4.png', './images/5.png', './images/6.png',
-                './images/7.png', './images/8.png', './images/9.png'
-            ],
+            inputs: images,
             result: ['', '', '', '', '', '', '', '', ''],
             statusWin: false,
             disableButton: true,
@@ -224,10 +245,12 @@ Vue.component('secondgame-component', {
 
 new Vue({
   el: '#app',
-  data : {
-    home : true,
-    game_1 : false,
-    game_2 : false
+  data() {
+    return {
+      home : true,
+      game_1 : false,
+      game_2 : false
+    }
   },
   methods : {
 

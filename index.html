@@ -68,7 +68,7 @@
           <div id="left-page">
             <h1 class="title"> SLIDE PUZZLE </h1>
             <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
-            <h1>MOVES : {{counter}}</h1>
+            <h1>MOVES : {{counter}} |  Time : {{date}} s</h1>
                 <div class="columns is-multiline">
                   <div class="column is-one-third" v-for="(game,i) in games">
                     <figure class="image">
@@ -88,7 +88,7 @@
                     </figure>
                   </div>
                 </div>
-              <p>STATUS : {{compare()}}</p>
+              <p>{{compare()}}</p>
             </div>
           </div>
         </div>
@@ -110,6 +110,7 @@
                 </div>
             </div>
             <a class="button" @click="reset">Reshuffle</a>
+            <a class="button" @click="start">Start Game</a>
 
           </div>
           <div id="right-page">
@@ -123,7 +124,6 @@
                     </div>
                 </div>
                 <p>Status : {{statusWin}}</p>
-                <button  v-on:click = "start">Start Game</button>
             </div>
           </div>
         </div>
