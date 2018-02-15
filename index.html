@@ -25,12 +25,17 @@
             </div>
           </div>
 
+<!-- CUSTOM PUZZLE -->
+          <custom-component v-if="custom"></custom-component>
+
 <!-- GAME 1 -->
           <firstgame-component v-if="game_1"></firstgame-component>
 
 <!-- GAME 2 -->
           <secondgame-component v-if="game_2"></secondgame-component>
 
+<!-- LEADER BOARD -->
+          <leaderboard-component v-if="leaderboard"></leaderboard-component>
 <!-- FOOTER -->
           <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">
@@ -39,7 +44,7 @@
                   <li class="navbottom is-active" id="homeNav" @click=(navigationHome('#homeNav'))>
                     <a>Home</a>
                   </li>
-                  <li class="navbottom" id="customeNav">
+                  <li class="navbottom" id="customNav" @click=(navigationCustom('#customNav'))>
                     <a>CUSTOM PUZZLE</a>
                   </li>
                   <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('#game_1Nav'))>
@@ -48,11 +53,8 @@
                   <li class="navbottom"id="game_2Nav" @click=(navigationGame_2('#game_2Nav'))>
                     <a>GAME 2</a>
                   </li>
-                  <li>
+                  <li class="navbottom" id="leaderboardNav" @click=(navigationLeaderboard('#leaderboardNav'))>
                     <a>LEADERBOARD</a>
-                  </li>
-                  <li>
-                    <a>LOGIN</a>
                   </li>
                 </ul>
               </div>
@@ -115,7 +117,7 @@
               <a class="button" @click="random">Reshuffle</a>
           </div>
           <div id="right-page">
-            <div class="container  resize">
+            <div class="container resize">
               <h1 class="subtitle">ORIGINAL IMAGE</h1>
                 <div class="columns is-multiline is-gapless">
                   <div class="column is-one-third" v-for="image in images">
@@ -130,7 +132,7 @@
         </div>
     </template>
 
-    <!-- GAME 2 -->
+    <!-- SECOND GAME TEMPLATE -->
     <template id="secondGame-template">
       <div class="hero-body">
         <div class="container">
@@ -150,24 +152,51 @@
 
           </div>
           <div id="right-page">
-            <div class="column is-one-third">
-                Result Image
-                <div class="columns is-multiline">
-                    <div class="column is-one-third" v-for="(item, idx) in result">
-                        <figure class="image">
-                            <img v-bind:src='item' alt="" v-on:click="moveToPick(item, idx)">
-                        </figure>
-                    </div>
-                </div>
-                <p>Status : {{statusWin}}</p>
+            <div class="container resizeSecondGame">
+              <div class="column is-one-third">
+                  Result Image
+                  <div class="columns is-multiline">
+                      <div class="column is-one-third" v-for="(item, idx) in result">
+                          <figure class="image">
+                              <img v-bind:src='item' alt="" v-on:click="moveToPick(item, idx)">
+                          </figure>
+                      </div>
+                  </div>
+                  <p>Status : {{statusWin}}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </template>
 
+<!-- TEMPLATE LEADERBOARD -->
+    <template id="leaderboard-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> LEADER BOARD SLIDE PUZZLE</h1>
+          </div>
+          <div id="right-page">
+            <h1 class="title"> LEADER BOARD MOVE PUZZLE</h1>
+          </div>
+        </div>
+      </div>
+    </template>
 
-
+<!-- TEMPLATE CUSTOM PUZZLE -->
+    <template id="custom-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> CUSTOM PUZZLE</h1>
+          </div>
+          <div id="right-page">
+            <h1 class="title"> LEADER BOARD MOVE PUZZLE</h1>
+          </div>
+        </div>
+      </div>
+    </template>
 
   <script type="text/javascript" src="function.js">
 
