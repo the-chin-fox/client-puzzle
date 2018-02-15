@@ -6,8 +6,12 @@ function navigationCloseBiasa(){
   $('.navbottom').removeClass('is-active')
 }
 
-function closeModal(){
+function closeModal(id){
   document.querySelector(id).classList.remove('is-active')
+}
+
+function openModalWinner(){
+  document.querySelector('#submitScore').classList.add('is-active')
 }
 
 var images = [
@@ -27,7 +31,7 @@ Vue.component('firstgame-component', {
   template: "#firstgame-template",
   data : function () {
     return {
-      counter : 0,
+      totalMoves : 0,
       statusWin : false,
       images : images,
       dissableButton : true,
@@ -43,7 +47,7 @@ Vue.component('firstgame-component', {
         return e == ""
       })
       if (this.canMove(zeroIndex, i)) {
-        this.counter += 1
+        this.totalMoves += 1
         var a = this.games.splice(i,1,'')
         this.games.splice(zeroIndex,1,a)
       }
@@ -73,7 +77,7 @@ Vue.component('firstgame-component', {
     },
     random(){
       this.statusWin = true
-      this.counter = 0
+      this.totalMoves = 0
       for (var i = this.games.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
         var temp = this.games[i];
@@ -98,7 +102,7 @@ Vue.component('firstgame-component', {
       } else {
         this.moveImage(4)
       }
-      this.counter = 0
+      this.totalMoves = 0
       this.start()
       return this.games;
     },
@@ -107,6 +111,7 @@ Vue.component('firstgame-component', {
       result.push('')
       if (String(this.games) == String(result) && this.statusWin) {
         this.stopTimer()
+        openModalWinner()
         return 'CONGRATULATION YOU BEAT YOUR MIND !'
       } else {
         return 'LETS DO THIS'
@@ -185,6 +190,7 @@ Vue.component('secondgame-component', {
             this.statusWin = this.inputs + '' == this.result + '';
             if (this.statusWin) {
                 this.stopTimer();
+                openModalWinner()
             }
         },
         moveToPick: function (imageName, idx) {

@@ -59,6 +59,42 @@
             </nav>
           </div>
       </section>
+      <div class="modal" id='submitScore'>
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Congratulation you won this game</p>
+            <button class="delete" onclick="closeModal('#submitScore')" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <p>Input your username to save your score</p>
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="e.g theChinFox">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Total Moves</label>
+              <div class="control">
+                <input class="input" value="{{}}">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Times</label>
+              <div class="control">
+                <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+              </div>
+            </div>
+
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button" onclick="closeModal('#submitScore')">Cancel</button>
+          </footer>
+        </div>
+      </div>
     </div>
 
 <!-- FIRST GAME TEMPLATE -->
@@ -68,7 +104,7 @@
           <div id="left-page">
             <h1 class="title"> SLIDE PUZZLE </h1>
             <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
-            <h1>MOVES : {{counter}} |  Time : {{date}} s</h1>
+            <h1>MOVES : {{totalMoves}} |  Time : {{date}} s</h1>
                 <div class="columns is-multiline">
                   <div class="column is-one-third" v-for="(game,i) in games">
                     <figure class="image">
@@ -131,42 +167,7 @@
     </template>
 
 
-    <div class="modal " id='submitScore'>
-      <div class="modal-background"></div>
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">Congratulation you won this game</p>
-          <button class="delete" onclick="closeModal('#submitScore')" aria-label="close"></button>
-        </header>
-        <section class="modal-card-body">
-          <p>Input your username to save your score</p>
-          <div class="field">
-            <div class="control">
-              <input class="input" type="text" placeholder="e.g theChinFox">
-            </div>
-          </div>
 
-          <div class="field">
-            <label class="label">Moves</label>
-            <div class="control">
-              <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="label">Times</label>
-            <div class="control">
-              <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
-            </div>
-          </div>
-
-        </section>
-        <footer class="modal-card-foot">
-          <button class="button is-success">Save changes</button>
-          <button class="button" onclick="closeModal('#submitScore')">Cancel</button>
-        </footer>
-      </div>
-    </div>
 
   <script type="text/javascript" src="function.js">
 
