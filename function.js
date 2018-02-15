@@ -10,8 +10,15 @@ function closeModal(id){
   document.querySelector(id).classList.remove('is-active')
 }
 
+var finalMove = 0;
+var finalTime = 0;
+var finalGame = 0;
+
 function openModalWinner(){
   document.querySelector('#submitScore').classList.add('is-active')
+  document.getElementById("#finalMove").value = finalMove;
+  document.getElementById("#finalTime").value = finalTime;
+  document.getElementById("#finalGame").value = finalGame;
 }
 
 var images = [
@@ -147,10 +154,16 @@ Vue.component('firstgame-component', {
         this.disableButton = false;
         this.startDate = new Date();
         this.timer = setInterval(this.runDate, 1000);
+
+        finalMove = 0;
+        finalTime = 0;
     },
     stopTimer: function () {
         this.disableButton = true;
         clearInterval(this.timer);
+
+        finalMove = this.totalMoves;
+        finalTime = this.date;
     }
   },
   computed : {
@@ -260,12 +273,17 @@ Vue.component('secondgame-component', {
             this.disableButton = false;
             this.startDate = new Date();
             this.timer = setInterval(this.runDate, 1000);
+
+            finalMove = 0;
+            finalTime = 0;
         },
         stopTimer: function () {
             this.disableButton = true;
             clearInterval(this.timer);
+            
+            finalMove = this.totalMoves;
+            finalTime = this.date;
         }
-
     }
 })
 
@@ -292,6 +310,7 @@ new Vue({
       this.custom = false
       navigationCloseBiasa()
       navigationOpenBiasa(id)
+      finalGame = 1;
     },
     navigationHome(id){
       this.home = true
@@ -311,6 +330,7 @@ new Vue({
       this.custom = false
       navigationCloseBiasa()
       navigationOpenBiasa(id)
+      finalGame = 2;
     },
     navigationLeaderboard(id){
       this.home = false
