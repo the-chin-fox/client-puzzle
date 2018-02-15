@@ -1,5 +1,3 @@
-
-
 function navigationOpenBiasa(id){
   $(id).addClass('is-active')
 }
