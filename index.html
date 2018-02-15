@@ -28,6 +28,9 @@
 <!-- GAME 1 -->
           <firstgame-component v-if="game_1"></firstgame-component>
 
+<!-- GAME 2 -->
+          <secondgame-component v-if="game_2"></secondgame-component>
+
 <!-- FOOTER -->
           <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">
@@ -42,7 +45,7 @@
                   <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('#game_1Nav'))>
                     <a>GAME 1</a>
                   </li>
-                  <li>
+                  <li class="navbottom"id="game_2Nav" @click=(navigationGame_2('#game_2Nav'))>
                     <a>GAME 2</a>
                   </li>
                   <li>
@@ -56,16 +59,52 @@
             </nav>
           </div>
       </section>
+      <div class="modal" id='submitScore'>
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Congratulation you won this game</p>
+            <button class="delete" onclick="closeModal('#submitScore')" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <p>Input your username to save your score</p>
+            <div class="field">
+              <div class="control">
+                <input class="input" type="text" placeholder="e.g theChinFox">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Total Moves</label>
+              <div class="control">
+                <input class="input" value="{{}}">
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Times</label>
+              <div class="control">
+                <input class="input" type="email" placeholder="e.g. alexsmith@gmail.com">
+              </div>
+            </div>
+
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button is-success">Save changes</button>
+            <button class="button" onclick="closeModal('#submitScore')">Cancel</button>
+          </footer>
+        </div>
+      </div>
     </div>
 
+<!-- FIRST GAME TEMPLATE -->
     <template id="firstgame-template">
       <div class="hero-body">
         <div class="container">
           <div id="left-page">
             <h1 class="title"> SLIDE PUZZLE </h1>
             <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
-            <h1>MOVES : {{counter}}</h1>
-
+            <h1>MOVES : {{totalMoves}} |  Time : {{date}} s</h1>
                 <div class="columns is-multiline">
                   <div class="column is-one-third" v-for="(game,i) in games">
                     <figure class="image">
@@ -85,10 +124,46 @@
                     </figure>
                   </div>
                 </div>
-              <p>STATUS : {{compare()}}</p>
+              <p>{{compare()}}</p>
             </div>
           </div>
         </div>
+    </template>
+
+    <!-- GAME 2 -->
+    <template id="secondGame-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> MOVE PUZZLE </h1>
+            <h2 class="subtitle"> Stay relax, pick image to play!  </h2>
+            <h1> Moves : {{totalMoves}}  |  Time : {{date}} s</h1>
+            <div class="columns is-multiline">
+                <div class="column is-one-third" v-for="(item, idx) in pickImage">
+                    <figure class="image">
+                        <img v-bind:src='item' alt="" v-on:click="moveToResult(item, idx)">
+                    </figure>
+                </div>
+            </div>
+            <a class="button" @click="reset">Reshuffle</a>
+            <a class="button" @click="start">Start Game</a>
+
+          </div>
+          <div id="right-page">
+            <div class="column is-one-third">
+                Result Image
+                <div class="columns is-multiline">
+                    <div class="column is-one-third" v-for="(item, idx) in result">
+                        <figure class="image">
+                            <img v-bind:src='item' alt="" v-on:click="moveToPick(item, idx)">
+                        </figure>
+                    </div>
+                </div>
+                <p>Status : {{statusWin}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
 
 

@@ -16,3 +16,7 @@
   float: left;
   width: 40%
 }
+
+#transition {
+  transition: 1s
+}
