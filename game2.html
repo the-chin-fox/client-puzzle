@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div id="game_2">
+        <secondgame-component></secondgame-component>
+    </div>
+
+    <template id="secondGame-template">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-one-third">
+                    Pick Image
+                    <div class="columns is-multiline">
+                        <div class="column is-one-third" v-for="(item, idx) in pickImage">
+                            <figure class="image">
+                                <img v-bind:src='item' alt="" v-on:click="moveToResult(item, idx)">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-one-third">
+                    Result Image
+                    <div class="columns is-multiline">
+                        <div class="column is-one-third" v-for="(item, idx) in result">
+                            <figure class="image">
+                                <img v-bind:src='item' alt="" v-on:click="moveToPick(item, idx)">
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <p>Total Move : {{totalMoves}}</p>
+            <p>Time : {{date}} s</p>
+            <p>Status : {{statusWin}}</p>
+
+            <button  v-on:click = "reset">Reset Game</button>
+            <button  v-on:click = "start">Start Game</button>
+        </div>
+
+    </template>
+
+    <script type="text/javascript" src="./game2.js"></script>
+</body>
+
+</html>
