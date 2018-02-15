@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Puzzle Master!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
     <script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.js"></script>
@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="app">
+
+<div id="app">
       <section  class="hero is-info is-fullheight">
           <div class="hero-body" v-if="home">
             <div class="container has-text-centered">
@@ -25,51 +26,20 @@
           </div>
 
 <!-- GAME 1 -->
-          <div class="hero-body" v-if="game_1">
-            <div class="container">
-              <div id="left-page">
-                <h1 class="title"> SLIDE PUZZLE </h1>
-                <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
-                <h1>MOVES : {{counter}}</h1>
-
-                    <div class="columns is-multiline">
-                      <div class="column is-one-third" v-for="(game,i) in games">
-                        <figure class="image">
-                          <img :src='game' alt="" @click="moveImage(i)">
-                        </figure>
-                      </div>
-                  </div>
-                  <a class="button" @click="random">Reshuffle</a>
-              </div>
-              <div id="right-page">
-                <div class="container  resize">
-                  <h1 class="subtitle">ORIGINAL IMAGE</h1>
-                    <div class="columns is-multiline is-gapless">
-                      <div class="column is-one-third" v-for="image in images">
-                        <figure class="image">
-                          <img :src='image' alt="">
-                        </figure>
-                      </div>
-                    </div>
-                  <p>STATUS : {{compare()}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
+          <firstgame-component v-if="game_1"></firstgame-component>
 
 <!-- FOOTER -->
           <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">
               <div class="container">
                 <ul>
-                  <li class="navbottom is-active" id="homeNav" @click=(navigationHome('homeNav'))>
+                  <li class="navbottom is-active" id="homeNav" @click=(navigationHome('#homeNav'))>
                     <a>Home</a>
                   </li>
                   <li class="navbottom" id="customeNav">
                     <a>CUSTOM PUZZLE</a>
                   </li>
-                  <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('game_1Nav'))>
+                  <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('#game_1Nav'))>
                     <a>GAME 1</a>
                   </li>
                   <li>
@@ -86,10 +56,42 @@
             </nav>
           </div>
       </section>
-
-
-
     </div>
+
+    <template id="firstgame-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> SLIDE PUZZLE </h1>
+            <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
+            <h1>MOVES : {{counter}}</h1>
+
+                <div class="columns is-multiline">
+                  <div class="column is-one-third" v-for="(game,i) in games">
+                    <figure class="image">
+                      <img :src='game' alt="" @click="moveImage(i)">
+                    </figure>
+                  </div>
+              </div>
+              <a class="button" @click="random">Reshuffle</a>
+          </div>
+          <div id="right-page">
+            <div class="container  resize">
+              <h1 class="subtitle">ORIGINAL IMAGE</h1>
+                <div class="columns is-multiline is-gapless">
+                  <div class="column is-one-third" v-for="image in images">
+                    <figure class="image">
+                      <img :src='image' alt="">
+                    </figure>
+                  </div>
+                </div>
+              <p>STATUS : {{compare()}}</p>
+            </div>
+          </div>
+        </div>
+    </template>
+
+
 
 
   <script type="text/javascript" src="function.js">
