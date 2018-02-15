@@ -1,3 +1,5 @@
+
+
 function navigationOpenBiasa(id){
   $(id).addClass('is-active')
 }
@@ -21,21 +23,42 @@ function openModalWinner(){
   document.getElementById("#finalGame").value = finalGame;
 }
 
-var images = [
-  '/images/1.png',
-  '/images/2.png',
-  '/images/3.png',
-  '/images/4.png',
-  '/images/5.png',
-  '/images/6.png',
-  '/images/7.png',
-  '/images/8.png',
-  '/images/9.png'
-]
+var images = []
 
 //Custom Puzzle Component
 Vue.component('custom-component', {
-  template : "#custom-template"
+  template : "#custom-template",
+  data : function () {
+    return {
+
+    }
+  },
+  methods: {
+    uploadImage () {
+      let imageId = document.querySelector('#imageId')
+      const formData = new FormData()
+
+      formData.append('image', imageId.files[0])
+      axios.post(`http://localhost:3000/api/images`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then((result) => {
+        images.push(result.data.imageSlice1)
+        images.push(result.data.imageSlice4)
+        images.push(result.data.imageSlice7)
+        images.push(result.data.imageSlice2)
+        images.push(result.data.imageSlice5)
+        images.push(result.data.imageSlice8)
+        images.push(result.data.imageSlice3)
+        images.push(result.data.imageSlice6)
+        images.push(result.data.imageSlice9)
+        console.log(images);
+      }).catch((err) => {
+        console.log(err);
+      })
+    }
+  }
 })
 
 //Leaderboard Component
