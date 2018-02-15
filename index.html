@@ -31,6 +31,9 @@
 <!-- GAME 2 -->
           <secondgame-component v-if="game_2"></secondgame-component>
 
+<!-- GAME 2 -->
+          <custom-component v-if="custom"></custom-component>
+
 <!-- FOOTER -->
           <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">
@@ -39,7 +42,7 @@
                   <li class="navbottom is-active" id="homeNav" @click=(navigationHome('#homeNav'))>
                     <a>Home</a>
                   </li>
-                  <li class="navbottom" id="customeNav">
+                  <li class="navbottom" id="customeNav" @click=navigationCustom('customeNav')>
                     <a>CUSTOM PUZZLE</a>
                   </li>
                   <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('#game_1Nav'))>
@@ -172,7 +175,7 @@
         </div>
       </div>
     </template>
-      
+
 <!-- TEMPLATE LEADERBOARD -->
     <template id="leaderboard-template">
       <div class="hero-body">
