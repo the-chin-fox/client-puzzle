@@ -25,10 +25,6 @@ Vue.component('firstgame-component', {
     }
   },
   methods : {
-    // game1Seen(){
-    //   console.log('123213');
-    //   return this.game_1 = true
-    // },
     moveImage(i) {
       let zeroIndex = this.games.findIndex(function(e){
         return e == ""
