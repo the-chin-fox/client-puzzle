@@ -28,6 +28,9 @@
 <!-- GAME 1 -->
           <firstgame-component v-if="game_1"></firstgame-component>
 
+<!-- GAME 2 -->
+          <secondgame-component v-if="game_2"></secondgame-component>
+
 <!-- FOOTER -->
           <div class="hero-foot">
             <nav class="tabs is-boxed is-fullwidth">
@@ -42,7 +45,7 @@
                   <li class="navbottom"id="game_1Nav" @click=(navigationGame_1('#game_1Nav'))>
                     <a>GAME 1</a>
                   </li>
-                  <li>
+                  <li class="navbottom"id="game_2Nav" @click=(navigationGame_2('#game_2Nav'))>
                     <a>GAME 2</a>
                   </li>
                   <li>
@@ -58,6 +61,7 @@
       </section>
     </div>
 
+<!-- FIRST GAME TEMPLATE -->
     <template id="firstgame-template">
       <div class="hero-body">
         <div class="container">
@@ -65,7 +69,6 @@
             <h1 class="title"> SLIDE PUZZLE </h1>
             <h2 class="subtitle"> Don't think too hard, Just do it! </h2>
             <h1>MOVES : {{counter}}</h1>
-
                 <div class="columns is-multiline">
                   <div class="column is-one-third" v-for="(game,i) in games">
                     <figure class="image">
@@ -91,8 +94,41 @@
         </div>
     </template>
 
+    <!-- GAME 2 -->
+    <template id="secondGame-template">
+      <div class="hero-body">
+        <div class="container">
+          <div id="left-page">
+            <h1 class="title"> MOVE PUZZLE </h1>
+            <h2 class="subtitle"> Stay relax, pick image to play!  </h2>
+            <h1> Moves : {{totalMoves}}  |  Time : {{date}} s</h1>
+            <div class="columns is-multiline">
+                <div class="column is-one-third" v-for="(item, idx) in pickImage">
+                    <figure class="image">
+                        <img v-bind:src='item' alt="" v-on:click="moveToResult(item, idx)">
+                    </figure>
+                </div>
+            </div>
+            <a class="button" @click="reset">Reshuffle</a>
 
-
+          </div>
+          <div id="right-page">
+            <div class="column is-one-third">
+                Result Image
+                <div class="columns is-multiline">
+                    <div class="column is-one-third" v-for="(item, idx) in result">
+                        <figure class="image">
+                            <img v-bind:src='item' alt="" v-on:click="moveToPick(item, idx)">
+                        </figure>
+                    </div>
+                </div>
+                <p>Status : {{statusWin}}</p>
+                <button  v-on:click = "start">Start Game</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
 
   <script type="text/javascript" src="function.js">
 
