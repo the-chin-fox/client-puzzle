@@ -20,3 +20,7 @@
 #transition {
   transition: 1s
 }
+
+.resizeSecondGame{
+  width: 700%
+}

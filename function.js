@@ -26,8 +26,26 @@ var images = [
   '/images/9.png'
 ]
 
+//Custom Puzzle Component
+Vue.component('custom-component', {
+  template : "#custom-template"
+})
+
+//Leaderboard Component
+Vue.component('leaderboard-component', {
+  template : "#leaderboard-template",
+  data : function (){
+    return {
+
+    }
+  },
+  methods : {
+
+  }
+})
+
+
 Vue.component('firstgame-component', {
-  // props: ['images'],
   template: "#firstgame-template",
   data : function () {
     return {
@@ -258,7 +276,9 @@ new Vue({
     return {
       home : true,
       game_1 : false,
-      game_2 : false
+      game_2 : false,
+      leaderboard : false,
+      custom : false
     }
   },
   methods : {
@@ -268,6 +288,8 @@ new Vue({
       this.game_1 = true
       this.home = false
       this.game_2 = false
+      this.leaderboard = false
+      this.custom = false
       navigationCloseBiasa()
       navigationOpenBiasa(id)
     },
@@ -275,6 +297,8 @@ new Vue({
       this.home = true
       this.game_1 = false
       this.game_2 = false
+      this.leaderboard = false
+      this.custom = false
       $('.navbottom').removeClass('is-active')
       navigationCloseBiasa()
       navigationOpenBiasa(id)
@@ -283,6 +307,26 @@ new Vue({
       this.home = false
       this.game_1 = false
       this.game_2 = true
+      this.leaderboard = false
+      this.custom = false
+      navigationCloseBiasa()
+      navigationOpenBiasa(id)
+    },
+    navigationLeaderboard(id){
+      this.home = false
+      this.game_1 = false
+      this.game_2 = false
+      this.leaderboard = true
+      this.custom = false
+      navigationCloseBiasa()
+      navigationOpenBiasa(id)
+    },
+    navigationCustom(id){
+      this.home = false
+      this.game_1 = false
+      this.game_2 = false
+      this.leaderboard = false
+      this.custom = true
       navigationCloseBiasa()
       navigationOpenBiasa(id)
     }
